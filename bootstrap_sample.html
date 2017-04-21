@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div id="header-html" class="hidden-pdf">
+    <div id="variables" style="display:none;">
+        <span id="margin-top">1mm</span>
+	<span id="margin-left">5mm</span>
+	<span id="margin-right">5mm</span>
+	<span id="margin-bottom">0mm</span>
+    </div>   
+</div>
+<div id="footer-html" class="visible-pdf">
+        {% if not no_letterhead and footer %}
+            <div class="letter-head-footer">
+                {{ footer }}
+            </div>
+        {% endif %}
+        <div class="row">
+        <p class="text-center small page-number visible-pdf">
+            {{ _("Page {0} of {1}").format('<span class="page"></span>', '<span class="topage"></span>') }}
+        </p><br>
+        <p>{{ doc.customer or '' }}</p>
+        </div>
+    </div>
+{%- macro add_header(page_num, max_pages, doc, letter_head, no_letterhead) -%}
+    {% if letter_head and not no_letterhead %}
+
+    <div class="letter-head">{{ letter_head }}</div>
+    {% endif %}      
+    {% if max_pages > 1 %}
+    <p class="text-right">{{ _("Page #{0} of {1}").format(page_num, max_pages) }}</p>
+    {% endif %}
+{%- endmacro -%}
+
+    <small>
+	
+        {{ add_header(0,1,doc,letter_head, no_letterhead) }}
+
+<div class="page-header">
+
+
+
+
+</head>
+<body>
+
+<div class="row" >
+    <div class="col-xs-5 text-left csms size18 ">
+        <h1 style="margin:0px;"><b>AURO GROUP</b></h1>
+         <p class ="tnr size12"><b>CUSTOMER SATISFACTION</b></p>         
+    </div> 
+    <div class="col-xs-4 text-left tnr size16">              
+        <b></b><br><b>TAX INVOICE</b>         
+    </div>      
+    <div  class="col-xs-3">
+           <img style="margin:0px; padding:6px" class="ribbon pull-left img-responsive" src="http://aurogroup.cloudapp.net/files/Auro%20Sales%20LoGo.png" alt="Auro Group" width=35% height=35%> 
+    </div>
+</div><br>
+
+<div style='border:1px solid #ccc;' class="row tnr size12">        
+     <div class="col-xs-6">            
+        <div class="row">
+            <div  class="col-xs-3 text-left padding-right0 margin-both0"><b>Bill To:</b></div>
+            <div  class="col-xs-9 text-left padding-left0 "><b>{{ doc.customer_name or '' }}</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"></b></div>
+            <div class="col-xs-9 text-left padding-left0">{{ doc.address_display or '' }}</div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>PAN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_pan or '' }}</div>
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>LST/TIN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_lst or '' }}</div>
+        </div> 
+        <div class="row">       
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>CST NO:</b></div>
+            <div class="col-xs-9 text-left padding-left0 margin-both0 ">{{ doc.makwiz_cst_no or '' }}</div>
+        </div> 
+
+    </div>
+
+    <div style='border-left:1px solid #ccc;' class="col-xs-6 tnr size12">
+        <div class="row">
+            <div class="col-xs-0 text-left"></div>
+            <div class="col-xs-12 text-left size14"><big><b>{{doc.makwiz_comp_display_name}}</b></big></div>    
+        </div>
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_1 or '' }}</div>
+        </div> 
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_2 or '' }}</div>
+        </div>
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_3 or '' }}</div>
+        </div>
+        <div class="row">
+        <div class="col-xs-1 text-left"><b>PAN:</b></div>
+            <div class="col-xs-3">{{doc.makwiz_comp_pan or ''}}</div>
+            <div class="col-xs-2 text-left"><b>TIN:</b></div>
+            <div class="col-xs-4">{{doc.makwiz_comp_tin or ''}}</div>
+        </div> 
+        <div class="row">
+        <div class="col-xs-1 text-left"><b>CST:</b></div>
+            <div class="col-xs-3">{{doc.makwiz_comp_cst or ''}}</div>
+            <div class="col-xs-2 text-left"><b>CIN:</b></div>
+            <div class="col-xs-4">{{doc.makwiz_comp_cin or ''}}</div>
+        </div>      
+    </div>
+</div>
+
+
+  <div style='border-right:1px solid #ccc; border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="row tnr size12">        
+     <div style='border-right:1px solid #ccc;' class="col-xs-6">            
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>Ship To:</b></div>
+            <div class="col-xs-9 text-left padding-left0 "><b>{{ doc.customer_name or '' }}</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"></div>
+            <div class="col-xs-9 text-left padding-left0  ">{{ doc.shipping_address or '' }}</div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>PAN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_pan or '' }}</div>
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>LST/TIN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_lst or '' }}</div>
+        </div> 
+        <div class="row">       
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>CST NO:</b></div>
+            <div class="col-xs-9 text-left padding-left0 margin-both0 ">{{ doc.makwiz_cst_no or '' }}</div>
+        </div>                  
+    </div>
+    <div class="col-xs-6 tnr size12">
+        <div  class="row">
+            <div  class="col-xs-4 text-left padding-right0 margin-both0"><b>Invoice No:</b></div>
+            <div  class="col-xs-3 text-left padding-left0 ">{{ doc.name or '' }}</div>
+            <div class="col-xs-2 text-left padding-right0 margin-both0"><b>Date:</b></div>
+            <div  class="col-xs-3 text-left padding-left0 ">{{ doc.get_formatted("posting_date") or '' }}</div>
+        </div>
+        
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0 "><b>Delivery Note:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_delivery_note_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.auro_delivery_note_date or doc.auro_delivery_note_date == '' %}{{ doc.get_formatted("auro_delivery_note_date") or ' ' }} {% endif %}</div>
+            </div>
+        
+          
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0"><b>Cust PO No:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.po_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.po_date or doc.po_date == '' %}{{ doc.get_formatted("po_date") or '' }}{% endif %}</div>
+            </div>
+      
+        
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0 "><b>Challan/LR No:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_challan_lr_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.auro_challan_lr_date or doc.auro_challan_lr_date == '' %}{{ doc.get_formatted("auro_challan_lr_date") or '' }}{% endif %}</div>
+            </div> 
+       
+       
+        
+            <div class="row">
+                <div class="col-xs-9 text-left padding-right0 margin-both0 "><b>Document Detail:</b></div>
+	           <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_document_detail or '' }}</div>
+            </div>
+           
+    </div>          
+</div>   
+
+<table class="tnr size11 border1">
+     <tr>
+        <th>Sl. No.</th>
+        <th>Product</th>
+        <th>Description</th>
+        <th>SO No.</th>
+        <th class="text-right">Qty</th>
+        <th class="text-right">Unit</th>
+        <th class="text-right">Rate</th>
+        <th class="text-right">Amount</th>
+    </tr>  
+    {%- for row in doc.items -%}
+        <tr>        
+            <td style="width: 2%;">{{ row.idx }}</td>
+            <td style="width: 20%;">{{ row.item_group or '' }} </td>       
+            <td style="width: 35%;">{{ row.item_name or '' }} </td>
+            <td style="width: 9%;">{{ row.sales_order or '' }}</td>
+            <td style="width: 6%; text-align: right;">{{ row.qty}}</td>
+            <td style="width: 6%; text-align: right;">{{ row.uom }}</td>
+            <td style="width: 11%; text-align: right;"> {{ row.rate }} </td>
+            <td style="width: 11%; text-align: right;">{{ row.amount }}</td>
+        </tr>
+    {%- endfor -%} 
+    </tbody>
+</table> 
+<table  width="100% "class="size11 tnr border2" >
+    <tr>
+        <th colspan="4" style="width: 66%; text-align: right;">Total</th>
+        <th style="width: 6%; text-align: right;">{{ doc.items|sum(attribute='qty') }}</th>        
+        <th style="width: 17%; text-align: right;"></th>
+        <th style="width: 11%; text-align: right;">{{ doc.get_formatted("net_total") }}</th>
+    </tr>
+</table>
+
+<div style='border-right:1px solid #ccc;border-left:1px solid #ccc; border-top:1px solid #ccc;' class="row tnr size12">
+    <div style='border-right:1px solid #ccc;' class="col-xs-8 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left "> <b>{{ _("Amount In Words: ") }}</b>{{ doc.in_words }}</p></div>
+        </div> 
+          
+        <div class="row">
+            <div class="col-xs-12 text-left"><b>Company Bank Details</b></div> 
+        </div>
+        <div  class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0">Bank Name:</div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "> {{ doc.auro_bank_name or '' }}</div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "></div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "> </div>            
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left">A/c No:</div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_bank_account_no or '' }}</div>
+            <div class="col-xs-6 text-left"></div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left">Branch:</div>
+            <div class="col-xs-6 text-left padding-left0 ">{{ doc.auro_bank_branch_name or '' }}</div>
+            <div class="col-xs-3 text-left"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left">IFSC Code:</div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_bank_ifs_code or '' }}</div>
+            <div class="col-xs-6 text-left"></div>
+        </div>      
+    </div>
+    <div class="col-xs-4 text-left paddin0 margin0 ">    
+        <div class="row tnr size12">        
+        <div  class="col-xs-7 text-left "> <b>{{ _("Discount") }}</b></div>
+        <div style='border-left:1px solid #ccc;' class="col-xs-5 text-right ">{{doc.get_formatted("discount_amount")}}</div>    
+        </div>    
+    <div class="row tnr size12">    
+            {%- for row in doc.taxes -%}
+                {%- if not row.included_in_print_rate -%}
+                                      
+                    <div style='border:1px solid #ccc;' class="col-xs-7 text-left "> <b> {{ row.description }}</b></div>   
+                        <div style='border:1px solid #ccc;' class="col-xs-5 text-right ">{{row.get_formatted("tax_amount")}}</div>
+
+                  
+                {%- endif -%}
+            {%- endfor -%} 
+        </div> 
+        <div class="row tnr size12">    
+            <div style='border-top:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Rounded Off") }}</b></div>
+            <div style='border:1px solid #ccc;' class="col-xs-5 text-right ">{{doc.get_formatted("makwiz_rounded_off")}}</div>
+        </div> 
+        <div class="row tnr size12">
+            <div style='border-top:1px solid #ccc;border-bottom:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Total Amount") }}<br></b></div>   
+            <div style='border-left:1px solid #ccc; border-rightt:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right size12"> {{ doc.get_formatted("rounded_total") }}<br></div>
+        </div>
+    </div>
+</div>
+
+<div style='border:1px solid #ccc;' class="row tnr size12">
+    <div style='border-right:1px solid #ccc;'class="col-xs-8 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left "> <b>Terms and Conditions</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-left ">{{ doc.terms or '' }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-left size11">
+                Receipt of this invoice entails that you have received material as per terms agreed by you. 
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 text-left paddin0 margin0">
+        {%- if doc.makwiz_total_unpaid > 0 -%}
+            <div class="row tnr">        
+                <div class="col-xs-7 text-left"> <b>{{ _("Prev Balance:") }}</b></b></div>
+                <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right ">{{ doc.get_formatted("makwiz_total_unpaid") }}</div>    
+            </div>
+        {%- endif -%}  
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Bill Amount:") }}</b></b></div>
+            <div style='border-right:1px solid #ccc; border-left:1px solid #ccc;' class="size11 col-xs-5 text-right ">{{ doc.get_formatted("rounded_total") }}</div>    
+        </div>       
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc;'  class="col-xs-7 text-left "> <b>{{ _("Net Balance:") }}</b></b></div>
+            <div style='border:1px solid #ccc;' class="col-xs-5 text-right "> ₹ {{ doc.rounded_total + doc.makwiz_total_unpaid }} </div>    
+        </div>
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Credit Period:") }}</b></b></div>
+            <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right ">{{ doc.makwiz_credit_days or '' }} Days</div>    
+        </div>
+    </div>
+</div>
+
+<div class="size12 row tnr size11">
+    <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-6 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left"><b>For {{ doc.customer_name or '' }}</b></div>
+        </div><br><br>  
+        <div class="row">
+            <div class="col-xs-12 text-left">Customer Seal & Signature</div>
+        </div>        
+    </div>
+    <div  style='border-left:1px solid #ccc; border-bottom:1px solid #ccc; border-right:1px solid #ccc;' class="col-xs-6 text-left paddin0 margin0">
+        <div class="row">
+            <div class="col-xs-12 text-right"><b>For {{doc.makwiz_comp_display_name}}</b></div>
+            </div><br><br> 
+        <div class="row">
+            <div class="col-xs-12 text-right">Authorized Signatory</div>
+        </div> 
+    </div>
+</div>
+
+<div style='border-top=1px solid #ccc;' class="row tnr ">
+    <div class="row">
+        <div class="size13 col-xs-12 text-center "><u><b>SUBJECT TO KOLKATA JURISDICTION</u></b></div>
+    </div>
+    <div class="row">
+        <div class="size12 col-xs-12 text-center size11">"This is a computer generated invoice and does not require manual signature"</div>
+    </div>
+</div>
+</small>
+
+
+
+
+
+
+
+<div class="page-break"></div>
+
+<div class="row" >
+    <div class="col-xs-5 text-left csms size18 ">
+        <h1 style="margin:0px;"><b>AURO GROUP</b></h1>
+         <p class ="tnr size12"><b>CUSTOMER SATISFACTION</b></p>         
+    </div> 
+    <div class="col-xs-4 text-left tnr size16">              
+        <b></b><br><b>TAX INVOICE</b>         
+    </div>      
+    <div  class="col-xs-3">
+           <img style="margin:0px; padding:6px" class="ribbon pull-left img-responsive" src="http://aurogroup.cloudapp.net/files/Auro%20Sales%20LoGo.png" alt="Auro Group" width=35% height=35%> 
+    </div>
+</div><br>
+
+<div style='border:1px solid #ccc;' class="row tnr size12">        
+     <div class="col-xs-6">            
+        <div class="row">
+            <div  class="col-xs-3 text-left padding-right0 margin-both0"><b>Bill To:</b></div>
+            <div  class="col-xs-9 text-left padding-left0 "><b>{{ doc.customer_name or '' }}</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"></b></div>
+            <div class="col-xs-9 text-left padding-left0">{{ doc.address_display or '' }}</div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>PAN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_pan or '' }}</div>
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>LST/TIN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_lst or '' }}</div>
+        </div> 
+        <div class="row">       
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>CST NO:</b></div>
+            <div class="col-xs-9 text-left padding-left0 margin-both0 ">{{ doc.makwiz_cst_no or '' }}</div>
+        </div> 
+
+    </div>
+
+    <div style='border-left:1px solid #ccc;' class="col-xs-6 tnr size12">
+        <div class="row">
+            <div class="col-xs-0 text-left"></div>
+            <div class="col-xs-12 text-left size14"><big><b>{{doc.makwiz_comp_display_name}}</b></big></div>    
+        </div>
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_1 or '' }}</div>
+        </div> 
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_2 or '' }}</div>
+        </div>
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_3 or '' }}</div>
+        </div>
+        <div class="row">
+        <div class="col-xs-1 text-left"><b>PAN:</b></div>
+            <div class="col-xs-3">{{doc.makwiz_comp_pan or ''}}</div>
+            <div class="col-xs-2 text-left"><b>TIN:</b></div>
+            <div class="col-xs-4">{{doc.makwiz_comp_tin or ''}}</div>
+        </div> 
+        <div class="row">
+        <div class="col-xs-1 text-left"><b>CST:</b></div>
+            <div class="col-xs-3">{{doc.makwiz_comp_cst or ''}}</div>
+            <div class="col-xs-2 text-left"><b>CIN:</b></div>
+            <div class="col-xs-4">{{doc.makwiz_comp_cin or ''}}</div>
+        </div>      
+    </div>
+</div>
+
+
+  <div style='border-right:1px solid #ccc; border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="row tnr size12">        
+     <div style='border-right:1px solid #ccc;' class="col-xs-6">            
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>Ship To:</b></div>
+            <div class="col-xs-9 text-left padding-left0 "><b>{{ doc.customer_name or '' }}</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"></div>
+            <div class="col-xs-9 text-left padding-left0  ">{{ doc.shipping_address or '' }}</div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>PAN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_pan or '' }}</div>
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>LST/TIN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_lst or '' }}</div>
+        </div> 
+        <div class="row">       
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>CST NO:</b></div>
+            <div class="col-xs-9 text-left padding-left0 margin-both0 ">{{ doc.makwiz_cst_no or '' }}</div>
+        </div>                  
+    </div>
+    <div class="col-xs-6 tnr size12">
+        <div  class="row">
+            <div  class="col-xs-4 text-left padding-right0 margin-both0"><b>Invoice No:</b></div>
+            <div  class="col-xs-3 text-left padding-left0 ">{{ doc.name or '' }}</div>
+            <div class="col-xs-2 text-left padding-right0 margin-both0"><b>Date:</b></div>
+            <div  class="col-xs-3 text-left padding-left0 ">{{ doc.get_formatted("posting_date") or '' }}</div>
+        </div>
+        
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0 "><b>Delivery Note:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_delivery_note_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.auro_delivery_note_date or doc.auro_delivery_note_date == '' %}{{ doc.get_formatted("auro_delivery_note_date") or ' ' }} {% endif %}</div>
+            </div>
+        
+          
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0"><b>Cust PO No:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.po_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.po_date or doc.po_date == '' %}{{ doc.get_formatted("po_date") or '' }}{% endif %}</div>
+            </div>
+      
+        
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0 "><b>Challan/LR No:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_challan_lr_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.auro_challan_lr_date or doc.auro_challan_lr_date == '' %}{{ doc.get_formatted("auro_challan_lr_date") or '' }}{% endif %}</div>
+            </div> 
+       
+       
+        
+            <div class="row">
+                <div class="col-xs-9 text-left padding-right0 margin-both0 "><b>Document Detail:</b></div>
+	           <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_document_detail or '' }}</div>
+            </div>
+           
+    </div>          
+</div>        
+
+<table class="tnr size11 border1">
+     <tr>
+        <th>Sl. No.</th>
+        <th>Product</th>
+        <th>Description</th>
+        <th>SO No.</th>
+        <th class="text-right">Qty</th>
+        <th class="text-right">Unit</th>
+        <th class="text-right">Rate</th>
+        <th class="text-right">Amount</th>
+    </tr>  
+    {%- for row in doc.items -%}
+        <tr>        
+            <td style="width: 2%;">{{ row.idx }}</td>
+            <td style="width: 20%;">{{ row.item_group or '' }} </td>       
+            <td style="width: 35%;">{{ row.item_name or '' }} </td>
+            <td style="width: 9%;">{{ row.sales_order or '' }}</td>
+            <td style="width: 6%; text-align: right;">{{ row.qty}}</td>
+            <td style="width: 6%; text-align: right;">{{ row.uom }}</td>
+            <td style="width: 11%; text-align: right;"> {{ row.rate }} </td>
+            <td style="width: 11%; text-align: right;">{{ row.amount }}</td>
+        </tr>
+    {%- endfor -%} 
+    </tbody>
+</table> 
+<table  width="100% "class="size11 tnr border2" >
+    <tr>
+        <th colspan="4" style="width: 66%; text-align: right;">Total</th>
+        <th style="width: 6%; text-align: right;">{{ doc.items|sum(attribute='qty') }}</th>        
+        <th style="width: 17%; text-align: right;"></th>
+        <th style="width: 11%; text-align: right;">{{ doc.get_formatted("net_total") }}</th>
+    </tr>
+</table>
+
+<div style='border-right:1px solid #ccc;border-left:1px solid #ccc; border-top:1px solid #ccc;' class="row tnr size12">
+    <div style='border-right:1px solid #ccc;' class="col-xs-8 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left "> <b>{{ _("Amount In Words: ") }}</b>{{ doc.in_words }}</p></div>
+        </div> 
+          
+        <div class="row">
+            <div class="col-xs-12 text-left"><b>Company Bank Details</b></div> 
+        </div>
+        <div  class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0">Bank Name:</div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "> {{ doc.auro_bank_name or '' }}</div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "></div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "> </div>            
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left">A/c No:</div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_bank_account_no or '' }}</div>
+            <div class="col-xs-6 text-left"></div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left">Branch:</div>
+            <div class="col-xs-6 text-left padding-left0 ">{{ doc.auro_bank_branch_name or '' }}</div>
+            <div class="col-xs-3 text-left"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left">IFSC Code:</div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_bank_ifs_code or '' }}</div>
+            <div class="col-xs-6 text-left"></div>
+        </div>      
+    </div>
+    <div class="col-xs-4 text-left paddin0 margin0 ">    
+        <div class="row tnr size12">        
+        <div  class="col-xs-7 text-left "> <b>{{ _("Discount") }}</b></div>
+        <div style='border-left:1px solid #ccc;' class="col-xs-5 text-right ">{{doc.get_formatted("discount_amount")}}</div>    
+        </div>    
+    <div class="row tnr size12">    
+            {%- for row in doc.taxes -%}
+                {%- if not row.included_in_print_rate -%}
+                                      
+                    <div style='border:1px solid #ccc;' class="col-xs-7 text-left "> <b> {{ row.description }}</b></div>   
+                        <div style='border:1px solid #ccc;' class="col-xs-5 text-right ">{{row.get_formatted("tax_amount")}}</div>
+
+                  
+                {%- endif -%}
+            {%- endfor -%} 
+        </div> 
+        <div class="row tnr size12">    
+            <div style='border-top:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Rounded Off") }}</b></div>
+            <div style='border:1px solid #ccc;' class="col-xs-5 text-right ">{{doc.get_formatted("makwiz_rounded_off")}}</div>
+        </div> 
+        <div class="row tnr size12">
+            <div style='border-top:1px solid #ccc;border-bottom:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Total Amount") }}<br></b></div>   
+            <div style='border-left:1px solid #ccc; border-rightt:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right size12"> {{ doc.get_formatted("rounded_total") }}<br></div>
+        </div>
+    </div>
+</div>
+
+<div style='border:1px solid #ccc;' class="row tnr size12">
+    <div style='border-right:1px solid #ccc;'class="col-xs-8 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left "> <b>Terms and Conditions</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-left ">{{ doc.terms or '' }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-left size11">
+                Receipt of this invoice entails that you have received material as per terms agreed by you. 
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 text-left paddin0 margin0">
+        {%- if doc.makwiz_total_unpaid > 0 -%}
+            <div class="row tnr">        
+                <div class="col-xs-7 text-left"> <b>{{ _("Prev Balance:") }}</b></b></div>
+                <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right ">{{ doc.get_formatted("makwiz_total_unpaid") }}</div>    
+            </div>
+        {%- endif -%}  
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Bill Amount:") }}</b></b></div>
+            <div style='border-right:1px solid #ccc; border-left:1px solid #ccc;' class="size11 col-xs-5 text-right ">{{ doc.get_formatted("rounded_total") }}</div>    
+        </div>       
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc;'  class="col-xs-7 text-left "> <b>{{ _("Net Balance:") }}</b></b></div>
+            <div style='border:1px solid #ccc;' class="col-xs-5 text-right "> ₹ {{ doc.rounded_total + doc.makwiz_total_unpaid }} </div>    
+        </div>
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Credit Period:") }}</b></b></div>
+            <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right ">{{ doc.makwiz_credit_days or '' }} Days</div>    
+        </div>
+    </div>
+</div>
+
+<div class="size12 row tnr size11">
+    <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-6 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left"><b>For {{ doc.customer_name or '' }}</b></div>
+        </div><br><br>  
+        <div class="row">
+            <div class="col-xs-12 text-left">Customer Seal & Signature</div>
+        </div>        
+    </div>
+    <div  style='border-left:1px solid #ccc; border-bottom:1px solid #ccc; border-right:1px solid #ccc;' class="col-xs-6 text-left paddin0 margin0">
+        <div class="row">
+            <div class="col-xs-12 text-right"><b>For {{doc.makwiz_comp_display_name}}</b></div>
+            </div><br><br> 
+        <div class="row">
+            <div class="col-xs-12 text-right">Authorized Signatory</div>
+        </div> 
+    </div>
+</div>
+
+<div style='border-top=1px solid #ccc;' class="row tnr ">
+    <div class="row">
+        <div class="size13 col-xs-12 text-center "><u><b>SUBJECT TO KOLKATA JURISDICTION</u></b></div>
+    </div>
+    <div class="row">
+        <div class="size12 col-xs-12 text-center size11">"This is a computer generated invoice and does not require manual signature"</div>
+    </div>
+</div>
+</small>
+
+
+
+<div class="page-break"></div>
+<div class="row" >
+    <div class="col-xs-5 text-left csms size18 ">
+        <h1 style="margin:0px;"><b>AURO GROUP</b></h1>
+         <p class ="tnr size12"><b>CUSTOMER SATISFACTION</b></p>         
+    </div> 
+    <div class="col-xs-4 text-left tnr size16">              
+        <b></b><br><b>TAX INVOICE</b>         
+    </div>      
+    <div  class="col-xs-3">
+           <img style="margin:0px; padding:6px" class="ribbon pull-left img-responsive" src="http://aurogroup.cloudapp.net/files/Auro%20Sales%20LoGo.png" alt="Auro Group" width=35% height=35%> 
+    </div>
+</div><br>
+
+<div style='border:1px solid #ccc;' class="row tnr size12">        
+     <div class="col-xs-6">            
+        <div class="row">
+            <div  class="col-xs-3 text-left padding-right0 margin-both0"><b>Bill To:</b></div>
+            <div  class="col-xs-9 text-left padding-left0 "><b>{{ doc.customer_name or '' }}</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"></b></div>
+            <div class="col-xs-9 text-left padding-left0">{{ doc.address_display or '' }}</div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>PAN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_pan or '' }}</div>
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>LST/TIN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_lst or '' }}</div>
+        </div> 
+        <div class="row">       
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>CST NO:</b></div>
+            <div class="col-xs-9 text-left padding-left0 margin-both0 ">{{ doc.makwiz_cst_no or '' }}</div>
+        </div> 
+
+    </div>
+
+    <div style='border-left:1px solid #ccc;' class="col-xs-6 tnr size12">
+        <div class="row">
+            <div class="col-xs-0 text-left"></div>
+            <div class="col-xs-12 text-left size14"><big><b>{{doc.makwiz_comp_display_name}}</b></big></div>    
+        </div>
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_1 or '' }}</div>
+        </div> 
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_2 or '' }}</div>
+        </div>
+        <div  class="row">
+            <div class="col-xs-0 text-left"><b></b></div>
+            <div class="col-xs-12">{{ doc.makwiz_comp_add_3 or '' }}</div>
+        </div>
+        <div class="row">
+        <div class="col-xs-1 text-left"><b>PAN:</b></div>
+            <div class="col-xs-3">{{doc.makwiz_comp_pan or ''}}</div>
+            <div class="col-xs-2 text-left"><b>TIN:</b></div>
+            <div class="col-xs-4">{{doc.makwiz_comp_tin or ''}}</div>
+        </div> 
+        <div class="row">
+        <div class="col-xs-1 text-left"><b>CST:</b></div>
+            <div class="col-xs-3">{{doc.makwiz_comp_cst or ''}}</div>
+            <div class="col-xs-2 text-left"><b>CIN:</b></div>
+            <div class="col-xs-4">{{doc.makwiz_comp_cin or ''}}</div>
+        </div>      
+    </div>
+</div>
+
+
+  <div style='border-right:1px solid #ccc; border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="row tnr size12">        
+     <div style='border-right:1px solid #ccc;' class="col-xs-6">            
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>Ship To:</b></div>
+            <div class="col-xs-9 text-left padding-left0 "><b>{{ doc.customer_name or '' }}</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"></div>
+            <div class="col-xs-9 text-left padding-left0  ">{{ doc.shipping_address or '' }}</div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>PAN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_pan or '' }}</div>
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>LST/TIN:</b></div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.makwiz_lst or '' }}</div>
+        </div> 
+        <div class="row">       
+            <div class="col-xs-3 text-left padding-right0 margin-both0"><b>CST NO:</b></div>
+            <div class="col-xs-9 text-left padding-left0 margin-both0 ">{{ doc.makwiz_cst_no or '' }}</div>
+        </div>                  
+    </div>
+    <div class="col-xs-6 tnr size12">
+        <div  class="row">
+            <div  class="col-xs-4 text-left padding-right0 margin-both0"><b>Invoice No:</b></div>
+            <div  class="col-xs-3 text-left padding-left0 ">{{ doc.name or '' }}</div>
+            <div class="col-xs-2 text-left padding-right0 margin-both0"><b>Date:</b></div>
+            <div  class="col-xs-3 text-left padding-left0 ">{{ doc.get_formatted("posting_date") or '' }}</div>
+        </div>
+        
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0 "><b>Delivery Note:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_delivery_note_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.auro_delivery_note_date or doc.auro_delivery_note_date == '' %}{{ doc.get_formatted("auro_delivery_note_date") or ' ' }} {% endif %}</div>
+            </div>
+        
+          
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0"><b>Cust PO No:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.po_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.po_date or doc.po_date == '' %}{{ doc.get_formatted("po_date") or '' }}{% endif %}</div>
+            </div>
+      
+        
+            <div class="row">
+                <div class="col-xs-4 text-left padding-right0 margin-both0 "><b>Challan/LR No:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_challan_lr_no or '' }}</div>
+                <div class="col-xs-2 text-left padding-right0 margin-both0 "><b>Date:</b></div>
+                <div class="col-xs-3 text-left padding-left0 ">{% if doc.auro_challan_lr_date or doc.auro_challan_lr_date == '' %}{{ doc.get_formatted("auro_challan_lr_date") or '' }}{% endif %}</div>
+            </div> 
+       
+       
+        
+            <div class="row">
+                <div class="col-xs-9 text-left padding-right0 margin-both0 "><b>Document Detail:</b></div>
+	           <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_document_detail or '' }}</div>
+            </div>
+           
+    </div>          
+</div>        
+
+<table class="tnr size11 border1">
+     <tr>
+        <th>Sl. No.</th>
+        <th>Product</th>
+        <th>Description</th>
+        <th>SO No.</th>
+        <th class="text-right">Qty</th>
+        <th class="text-right">Unit</th>
+        <th class="text-right">Rate</th>
+        <th class="text-right">Amount</th>
+    </tr>  
+    {%- for row in doc.items -%}
+        <tr>        
+            <td style="width: 2%;">{{ row.idx }}</td>
+            <td style="width: 20%;">{{ row.item_group or '' }} </td>       
+            <td style="width: 35%;">{{ row.item_name or '' }} </td>
+            <td style="width: 9%;">{{ row.sales_order or '' }}</td>
+            <td style="width: 6%; text-align: right;">{{ row.qty}}</td>
+            <td style="width: 6%; text-align: right;">{{ row.uom }}</td>
+            <td style="width: 11%; text-align: right;"> {{ row.rate }} </td>
+            <td style="width: 11%; text-align: right;">{{ row.amount }}</td>
+        </tr>
+    {%- endfor -%} 
+    </tbody>
+</table> 
+<table  width="100% "class="size11 tnr border2" >
+    <tr>
+        <th colspan="4" style="width: 66%; text-align: right;">Total</th>
+        <th style="width: 6%; text-align: right;">{{ doc.items|sum(attribute='qty') }}</th>        
+        <th style="width: 17%; text-align: right;"></th>
+        <th style="width: 11%; text-align: right;">{{ doc.get_formatted("net_total") }}</th>
+    </tr>
+</table>
+
+<div style='border-right:1px solid #ccc;border-left:1px solid #ccc; border-top:1px solid #ccc;' class="row tnr size12">
+    <div style='border-right:1px solid #ccc;' class="col-xs-8 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left "> <b>{{ _("Amount In Words: ") }}</b>{{ doc.in_words }}</p></div>
+        </div> 
+          
+        <div class="row">
+            <div class="col-xs-12 text-left"><b>Company Bank Details</b></div> 
+        </div>
+        <div  class="row">
+            <div class="col-xs-3 text-left padding-right0 margin-both0">Bank Name:</div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "> {{ doc.auro_bank_name or '' }}</div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "></div>
+            <div class="col-xs-3 text-left padding-left0 padding-left0 margin-both0 "> </div>            
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left">A/c No:</div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_bank_account_no or '' }}</div>
+            <div class="col-xs-6 text-left"></div>
+        </div> 
+        <div class="row">
+            <div class="col-xs-3 text-left">Branch:</div>
+            <div class="col-xs-6 text-left padding-left0 ">{{ doc.auro_bank_branch_name or '' }}</div>
+            <div class="col-xs-3 text-left"></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 text-left">IFSC Code:</div>
+            <div class="col-xs-3 text-left padding-left0 ">{{ doc.auro_bank_ifs_code or '' }}</div>
+            <div class="col-xs-6 text-left"></div>
+        </div>      
+    </div>
+    <div class="col-xs-4 text-left paddin0 margin0 ">    
+        <div class="row tnr size12">        
+        <div  class="col-xs-7 text-left "> <b>{{ _("Discount") }}</b></div>
+        <div style='border-left:1px solid #ccc;' class="col-xs-5 text-right ">{{doc.get_formatted("discount_amount")}}</div>    
+        </div>    
+    <div class="row tnr size12">    
+            {%- for row in doc.taxes -%}
+                {%- if not row.included_in_print_rate -%}
+                                      
+                    <div style='border:1px solid #ccc;' class="col-xs-7 text-left "> <b> {{ row.description }}</b></div>   
+                        <div style='border:1px solid #ccc;' class="col-xs-5 text-right ">{{row.get_formatted("tax_amount")}}</div>
+
+                  
+                {%- endif -%}
+            {%- endfor -%} 
+        </div> 
+        <div class="row tnr size12">    
+            <div style='border-top:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Rounded Off") }}</b></div>
+            <div style='border:1px solid #ccc;' class="col-xs-5 text-right ">{{doc.get_formatted("makwiz_rounded_off")}}</div>
+        </div> 
+        <div class="row tnr size12">
+            <div style='border-top:1px solid #ccc;border-bottom:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Total Amount") }}<br></b></div>   
+            <div style='border-left:1px solid #ccc; border-rightt:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right size12"> {{ doc.get_formatted("rounded_total") }}<br></div>
+        </div>
+    </div>
+</div>
+
+<div style='border:1px solid #ccc;' class="row tnr size12">
+    <div style='border-right:1px solid #ccc;'class="col-xs-8 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left "> <b>Terms and Conditions</b></div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-left ">{{ doc.terms or '' }}</div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-left size11">
+                Receipt of this invoice entails that you have received material as per terms agreed by you. 
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 text-left paddin0 margin0">
+        {%- if doc.makwiz_total_unpaid > 0 -%}
+            <div class="row tnr">        
+                <div class="col-xs-7 text-left"> <b>{{ _("Prev Balance:") }}</b></b></div>
+                <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right ">{{ doc.get_formatted("makwiz_total_unpaid") }}</div>    
+            </div>
+        {%- endif -%}  
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Bill Amount:") }}</b></b></div>
+            <div style='border-right:1px solid #ccc; border-left:1px solid #ccc;' class="size11 col-xs-5 text-right ">{{ doc.get_formatted("rounded_total") }}</div>    
+        </div>       
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc;'  class="col-xs-7 text-left "> <b>{{ _("Net Balance:") }}</b></b></div>
+            <div style='border:1px solid #ccc;' class="col-xs-5 text-right "> ₹ {{ doc.rounded_total + doc.makwiz_total_unpaid }} </div>    
+        </div>
+        <div class="row tnr">        
+            <div style='border-top:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-7 text-left "> <b>{{ _("Credit Period:") }}</b></b></div>
+            <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-5 text-right ">{{ doc.makwiz_credit_days or '' }} Days</div>    
+        </div>
+    </div>
+</div>
+
+<div class="size12 row tnr size11">
+    <div style='border-left:1px solid #ccc; border-bottom:1px solid #ccc;' class="col-xs-6 text-left">
+        <div class="row">
+            <div class="col-xs-12 text-left"><b>For {{ doc.customer_name or '' }}</b></div>
+        </div><br><br>  
+        <div class="row">
+            <div class="col-xs-12 text-left">Customer Seal & Signature</div>
+        </div>        
+    </div>
+    <div  style='border-left:1px solid #ccc; border-bottom:1px solid #ccc; border-right:1px solid #ccc;' class="col-xs-6 text-left paddin0 margin0">
+        <div class="row">
+            <div class="col-xs-12 text-right"><b>For {{doc.makwiz_comp_display_name}}</b></div>
+            </div><br><br> 
+        <div class="row">
+            <div class="col-xs-12 text-right">Authorized Signatory</div>
+        </div> 
+    </div>
+</div>
+
+<div style='border-top=1px solid #ccc;' class="row tnr ">
+    <div class="row">
+        <div class="size13 col-xs-12 text-center "><u><b>SUBJECT TO KOLKATA JURISDICTION</u></b></div>
+    </div>
+    <div class="row">
+        <div class="size12 col-xs-12 text-center size11">"This is a computer generated invoice and does not require manual signature"</div>
+    </div>
+</div>
+</small>
+</body>
+</html>
